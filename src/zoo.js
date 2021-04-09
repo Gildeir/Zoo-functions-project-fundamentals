@@ -17,12 +17,10 @@ const { animals } = data;
 function animalsByIds(...ids) {
   return ids.map((id) => animals.find((animal) => animal.id === id));
 }
-
 function animalsOlderThan(animal, age) {
   const theAnimal = animals.find(({ name }) => name === animal);
   return theAnimal.residents.every((resident) => resident.age >= age);
 }
-
 function employeeByName(employeeName) {
   if (employeeName === undefined) {
     return {};
@@ -30,13 +28,15 @@ function employeeByName(employeeName) {
   return employees.find((name) =>
     name.firstName === employeeName || name.lastName === employeeName);
 }
-// function createEmployee(personalInfo, associatedWith) {
-//   // seu código aqui
-// }
+function createEmployee(personalInfo, associatedWith) {
+  const myObj = { ...personalInfo, ...associatedWith };
+  return myObj;
+}
 
-// function isManager(id) {
-//   // seu código aqui
-// }
+function isManager(ids) {
+  return employees.some((manager) => manager.managers.includes(ids));
+}
+// console.log(isManager('0e7b460e-acf4-4e17-bcb3-ee472265db83'));
 
 // function addEmployee(id, firstName, lastName, managers, responsibleFor) {
 //   // seu código aqui
@@ -79,9 +79,9 @@ module.exports = {
   employeeByName,
   // employeeCoverage,
   // addEmployee,
-  // isManager,
+  isManager,
   animalsOlderThan,
   // oldestFromFirstSpecies,
   // increasePrices,
-  // createEmployee,
+  createEmployee,
 };
