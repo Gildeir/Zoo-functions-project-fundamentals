@@ -59,10 +59,30 @@ function animalCount(species) {
   if (!species) return empty;
   return theObject.residents.length;
 }
-// function entryCalculator(entrants) {
-//   // seu código aqui
-// }
 
+// 8. IMPLEMENTE A FUNÇÃO entryCalculator
+// A partir da quantidade de visitantes e a faixa etária de cada um, esta função é responsável por retornar o preço total a ser cobrado
+
+// Observações técnicas
+
+// O parâmetro entrants recebe um objeto que contém as chaves Adult, Child e Senior, com suas respectivas quantidades de pessoas
+// O que será avaliado
+
+// Retorna 0 se nenhum argumento for passado
+// Retorna 0 se um objeto vazio for passado
+// Retorna o preço total a ser cobrado dado o número de adultos, crianças e idosos
+
+function entryCalculator(entrants = 0) {
+  if (!entrants) return 0;
+  let a = 0; let b = 0; let c = 0;
+
+  if (entrants.Adult) { a = entrants.Adult * 49.99; }
+  if (entrants.Child) { b = entrants.Child * 20.99; }
+  if (entrants.Senior) { c = entrants.Senior * 24.99; }
+
+  return a + b + c;
+}
+// entryCalculator(obj);
 // function animalMap(options) {
 //   // seu código aqui
 // }
@@ -84,7 +104,7 @@ function animalCount(species) {
 // }
 
 module.exports = {
-  // entryCalculator,
+  entryCalculator,
   // schedule,
   animalCount,
   // animalMap,
