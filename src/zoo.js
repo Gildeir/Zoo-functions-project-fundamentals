@@ -12,6 +12,7 @@ const {
   employees,
   animals,
   hours,
+  prices,
 } = require('./data');
 // const data = require('./data');
 
@@ -135,9 +136,12 @@ function schedule(dayName) {
 //   // seu código aqui
 // }
 
-// function increasePrices(percentage) {
-//   // seu código aqui
-// }
+function increasePrices(percentage) {
+  Object.keys(prices).forEach((item) => {
+    prices[item] += (prices[item] * percentage) / 100;
+    prices[item] = Math.round(prices[item] * 100) / 100;
+  });
+}
 
 // const empty = {};
 // const theObject = animals.find((e) => species === e.name);
@@ -174,6 +178,6 @@ module.exports = {
   isManager,
   animalsOlderThan,
   // oldestFromFirstSpecies,
-  // increasePrices,
+  increasePrices,
   createEmployee,
 };
