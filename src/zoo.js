@@ -129,7 +129,7 @@ function schedule(dayName) {
     [dayName]: newObj[dayName],
   };
 }
-schedule();
+// schedule();
 
 // function oldestFromFirstSpecies(id) {
 //   // seu código aqui
