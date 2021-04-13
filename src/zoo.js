@@ -8,17 +8,25 @@ eslint no-unused-vars: [
   }
 ]
 */
-const { employees, animals } = require('./data');
+const {
+  employees,
+  animals,
+  hours,
+} = require('./data');
 // const data = require('./data');
 
 function animalsByIds(...ids) {
   if (!ids) return [];
   return ids.map((e) => animals.find((f) => f.id === e));
 }
+
 function animalsOlderThan(animal, age) {
-  const theAnimal = animals.find(({ name }) => name === animal);
+  const theAnimal = animals.find(({
+    name,
+  }) => name === animal);
   return theAnimal.residents.every((resident) => resident.age >= age);
 }
+
 function employeeByName(employeeName) {
   if (employeeName === undefined) {
     return {};
@@ -26,8 +34,12 @@ function employeeByName(employeeName) {
   return employees.find((name) =>
     name.firstName === employeeName || name.lastName === employeeName);
 }
+
 function createEmployee(personalInfo, associatedWith) {
-  const myObj = { ...personalInfo, ...associatedWith };
+  const myObj = {
+    ...personalInfo,
+    ...associatedWith,
+  };
   return myObj;
 }
 
@@ -36,8 +48,16 @@ function isManager(ids) {
 }
 
 function addEmployee(id, firstName, lastName, managers = [], responsibleFor = []) {
-  const obj = [{ id, firstName, lastName, managers, responsibleFor }];
+  const obj = [{
+    id,
+    firstName,
+    lastName,
+    managers,
+    responsibleFor,
+  }];
+
   obj.forEach((e) => employees.push(e));
+
   // console.log(employees);
 }
 // addEmployee('4141da1c-a6ed-4cf7-90c4-99c657ba4ef3', 'Jane', 'Doe',
@@ -74,22 +94,42 @@ function animalCount(species) {
 
 function entryCalculator(entrants = 0) {
   if (!entrants) return 0;
-  let a = 0; let b = 0; let c = 0;
+  let a = 0;
+  let b = 0;
+  let c = 0;
 
-  if (entrants.Adult) { a = entrants.Adult * 49.99; }
-  if (entrants.Child) { b = entrants.Child * 20.99; }
-  if (entrants.Senior) { c = entrants.Senior * 24.99; }
-
+  if (entrants.Adult) {
+    a = entrants.Adult * 49.99;
+  }
+  if (entrants.Child) {
+    b = entrants.Child * 20.99;
+  }
+  if (entrants.Senior) {
+    c = entrants.Senior * 24.99;
+  }
   return a + b + c;
 }
-// entryCalculator(obj);
 // function animalMap(options) {
 //   // seu código aqui
 // }
 
-// function schedule(dayName) {
-//   // seu código aqui
-// }
+function schedule(dayName) {
+  const newObj = {};
+  Object.keys(hours).forEach((item) => {
+    if (item === 'Monday') {
+      (newObj[item] = 'CLOSED');
+    } else {
+      newObj[item] = `Open from ${hours[item].open}am until ${hours[item].close % 12}pm`;
+    }
+  });
+  if (!dayName) {
+    return newObj;
+  }
+  return {
+    [dayName]: newObj[dayName],
+  };
+}
+schedule();
 
 // function oldestFromFirstSpecies(id) {
 //   // seu código aqui
@@ -99,13 +139,32 @@ function entryCalculator(entrants = 0) {
 //   // seu código aqui
 // }
 
-// function employeeCoverage(idOrName) {
-//   // seu código aqui
+// const empty = {};
+// const theObject = animals.find((e) => species === e.name);
+// animals.forEach((e) => {
+//   empty[e.name] = e.residents.length;
+// });
+// if (!species) return empty;
+// return theObject.residents.length;
 // }
+
+// function employeeCoverage(idOrName) {
+//   if (!idOrName) {
+//     employees.forEach((e) => {
+//       // const names = `${e.firstName} ${e.lastName}`;
+//       // const responsibleForIds = e.responsibleFor;
+//       // const listaEmployeesName = `'${names}' : ['${responsibleForIds}']`;
+//       // console.log(listaEmployeesName);
+//       // responsibleForIds.forEach((id) => animals.forEach((animalName) => console.log(animalName.name)));
+//     });
+//   }
+// }
+
+// employeeCoverage();
 
 module.exports = {
   entryCalculator,
-  // schedule,
+  schedule,
   animalCount,
   // animalMap,
   animalsByIds,
