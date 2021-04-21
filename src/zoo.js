@@ -9,10 +9,12 @@ eslint no-unused-vars: [
 ]
 */
 const {
-  employees,
   animals,
   hours,
   prices,
+} = require('./data');
+let {
+  employees,
 } = require('./data');
 // const data = require('./data');
 
@@ -58,18 +60,7 @@ function addEmployee(id, firstName, lastName, managers = [], responsibleFor = []
   }];
 
   obj.forEach((e) => employees.push(e));
-
-  // console.log(employees);
 }
-// addEmployee('4141da1c-a6ed-4cf7-90c4-99c657ba4ef3', 'Jane', 'Doe',
-//   [
-//     '546fe3d4-2d81-4bb4-83a7-92d5b7048d17',
-//     'a67a36ee-3765-4c74-8e0f-13f881f6588a',
-//   ],
-//   [
-//     'ee6139bf-b526-4653-9e1e-1ca128d0ad2e',
-//     '210fcd23-aa7b-4975-91b7-0230ebb27b99',
-//   ]);
 
 function animalCount(species) {
   const empty = {};
@@ -146,28 +137,21 @@ function increasePrices(percentage) {
   });
 }
 
-// const empty = {};
-// const theObject = animals.find((e) => species === e.name);
-// animals.forEach((e) => {
-//   empty[e.name] = e.residents.length;
-// });
-// if (!species) return empty;
-// return theObject.residents.length;
-// }
+function employeeCoverage(idOrName) {
+  const obj = {};
+  if (idOrName) {
+    employees = employees.filter(({ id, firstName, lastName }) => (
+      id === idOrName || firstName === idOrName || lastName === idOrName));
+  }
+  employees.forEach(({ firstName, lastName, responsibleFor }) => (
+    obj[`${firstName} ${lastName}`] = responsibleFor.map((id) => (
+      animals.filter(({ id: animalID }) => (animalID === id))[0].name
+    ))
+  ));
+  return obj;
+}
 
-// function employeeCoverage(idOrName) {
-//   if (!idOrName) {
-//     employees.forEach((e) => {
-//       // const names = `${e.firstName} ${e.lastName}`;
-//       // const responsibleForIds = e.responsibleFor;
-//       // const listaEmployeesName = `'${names}' : ['${responsibleForIds}']`;
-//       // console.log(listaEmployeesName);
-//       // responsibleForIds.forEach((id) => animals.forEach((animalName) => console.log(animalName.name)));
-//     });
-//   }
-// }
-
-// employeeCoverage();
+console.log(employeeCoverage());
 
 module.exports = {
   entryCalculator,
@@ -176,7 +160,7 @@ module.exports = {
   // animalMap,
   animalsByIds,
   employeeByName,
-  // employeeCoverage,
+  employeeCoverage,
   addEmployee,
   isManager,
   animalsOlderThan,
