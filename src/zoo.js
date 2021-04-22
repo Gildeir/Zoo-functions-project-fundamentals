@@ -13,7 +13,7 @@ const {
   hours,
   prices,
 } = require('./data');
-let {
+const {
   employees,
 } = require('./data');
 // const data = require('./data');
@@ -139,18 +139,22 @@ function increasePrices(percentage) {
 
 function employeeCoverage(idOrName) {
   const obj = {};
-  if (idOrName) {
-    employees = employees.filter(({ id, firstName, lastName }) => (
-      id === idOrName || firstName === idOrName || lastName === idOrName));
-  }
-  employees.forEach(({ firstName, lastName, responsibleFor }) => (
-    obj[`${firstName} ${lastName}`] = responsibleFor.map((id) => (
-      animals.filter(({ id: animalID }) => (animalID === id))[0].name
-    ))
-  ));
-  return obj;
-}
+  employees.forEach((employee) => {
+    const name = `${employee.firstName} ${employee.lastName}`;
+    const animalId = animalsByIds(...employee.responsibleFor);
+    obj[name] = animalId.map((animal) => animal.name);
+  });
 
+  if (!idOrName) {
+    return obj;
+  }
+
+  const employee = employees.find((e) =>
+    (e.id === idOrName) || e.firstName === idOrName || e.lastName === idOrName);
+  const name = `${employee.firstName} ${employee.lastName}`;
+  const data = { [name]: obj[name] };
+  return data;
+}
 console.log(employeeCoverage());
 
 module.exports = {
